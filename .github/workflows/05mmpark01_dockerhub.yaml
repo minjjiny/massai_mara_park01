@@ -25,3 +25,34 @@ jobs:
          - name: logout from docker hub
            if: always()
            run: docker logout
+         
+         - name: Build Docker image
+           uses: docker/build-push-action@v5
+           with: 
+              context: .
+              file: ./Dockerfile
+              push: false
+              load: true
+              tags: massai_mara:v1
+              cache-from: type=gha
+              cache-to: type=gha, mode=max
+
+         - name: run docker container
+           run: |
+              docker run -d --name mmpark01 -p 8080:8080 massai_mara:v1
+              sleep 10
+
+              docker ps
+              docker logs mmpark01
+
+         - name: run automated test #1
+           run: |
+              curl http://localhost:8080 || exit 1
+
+         - name: run automated test #2
+           run: |
+              curl http://localhost:8080/images || exit 1
+
+         - name: run automated test #3
+           run: |
+              curl http://localhost:8080/animal || exit 1
