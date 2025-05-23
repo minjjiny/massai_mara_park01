@@ -18,7 +18,7 @@ jobs:
          - name: Checkout Code
            uses: actions/checkout@v4
 
-         - name: setup QEM
+         - name: setup QEMU
            uses: docker/setup-qemu-action@v3
 
          - name: setup docker buildx
@@ -29,6 +29,7 @@ jobs:
            with: 
               context: .
               file: ./Dockerfile
+              platforms: linux/arm64
               push: false
               load: true
               tags: ${{ env.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG}}
@@ -118,5 +119,5 @@ jobs:
                  docker compose -f  ./compose-multijobs.yaml up -d
                  sleep 30
               
-                 docker compose ps
-                 docker compose logs
+                 docker compose -f  ./compose-multijobs.yaml ps
+                 docker compose -f  ./compose-multijobs.yaml logs
