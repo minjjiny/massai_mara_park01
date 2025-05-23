@@ -18,6 +18,9 @@ jobs:
          - name: Checkout Code
            uses: actions/checkout@v4
 
+         - name: setup QEM
+           uses: docker/setup-qemu-action@v3
+
          - name: setup docker buildx
            uses: docker/setup-buildx-action@v3 
 
