@@ -116,7 +116,7 @@ jobs:
               port: 8832
               script: |
                  docker compose -f ./compose-multijobs.yaml down  
-                 docker image rm -f siestageek/massai_mara
+                 docker image rm -f minjjiny/massai_mara
                  docker compose -f ./compose-multijobs.yaml up -d
 
                  sleep 15
